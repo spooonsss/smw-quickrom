@@ -78,8 +78,12 @@ STY $420B
 endmacro
 
 org $808A4E
+	assert read1($808A4E) == $22,"You need to initialize ex animation in LM first"
+	db $22 ; JSL
+	dl read3($808A4E+1)
 ClearStack:
 REP #$20
+SEP #$10
 %ClearRAMInit()
 LDA #$1100;#$0D80 seems to be enough in SlowROM mode, but I need a bit more in FastROM.
 .WasteTime
